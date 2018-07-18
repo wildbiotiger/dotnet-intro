@@ -1,0 +1,97 @@
+﻿<Window x:Class="StudentClassData.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentClassData"
+        mc:Ignorable="d"
+        FontSize="12"
+        Title="Student Class Data" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "350*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <Grid Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0"> Student ID</Label>
+            <TextBox Name="StudentID" Text ="{Binding SelectedStudent.StudentID}" Grid.Column="0" Grid.Row="1"> </TextBox>
+            
+            <Label Grid.Column="0" Grid.Row="2">Full Name</Label>
+            <TextBox Name="FullName" Text ="{Binding SelectedStudent.FullName}" Grid.Column="0" Grid.Row="3"></TextBox>
+            
+            <Label Grid.Column="0" Grid.Row="4">Gender</Label>
+            <TextBox Name="Gender" Text ="{Binding SelectedStudent.Gender}" Grid.Column="0" Grid.Row="5"></TextBox>
+            
+            <Label Grid.Column="0" Grid.Row="6">Age</Label>
+            <TextBox Name="Age" Text ="{Binding SelectedStudent.Age}" Grid.Column="0" Grid.Row="8"></TextBox>
+            
+        </Grid>
+        <Grid Grid.Column="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label  Grid.Column="1" Grid.Row="0">Class ID</Label>
+            <TextBox Name="ClassID" Text="{Binding SelectedClass.ClassID}" Grid.Column="0" Grid.Row="1"></TextBox>
+
+            <Label  Grid.Column="1" Grid.Row="2">Name</Label>
+            <TextBox Name="Name" Text="{Binding SelectedClass.Name}" Grid.Column="0" Grid.Row="3"></TextBox>
+
+            <Label  Grid.Column="1" Grid.Row="4">IsHonors</Label>
+            <TextBox Name="IsHonors" Text="{Binding SelectedClass.IsHonors}" Grid.Column="0" Grid.Row="5"></TextBox>
+
+            <Label  Grid.Column="1" Grid.Row="6">Room #</Label>
+            <TextBox Name="RoomNumber" Text="{Binding SelectedClass.RoomNumber}" Grid.Column="0" Grid.Row="8"></TextBox>
+
+        </Grid>
+
+        <Button Grid.Column = "0" Grid.Row = "1" Command="{Binding AddStudentCommand}">Add</Button>
+        <Button Grid.Column = "1" Grid.Row = "1" Command="{Binding RemoveStudentCommand}">Remove</Button>
+        <Button Grid.Column = "2" Grid.Row = "1" Command="{Binding CommitStudentCommand}">Commit</Button>
+        <Button Grid.Column = "4" Grid.Row = "1" Command="{Binding AddClassCommand}">Add</Button>
+        <Button Grid.Column = "5" Grid.Row = "1" Command="{Binding RemoveClassCommand}">Remove</Button>
+        <Button Grid.Column = "6" Grid.Row = "1" Command="{Binding CommitClassCommand}">Commit</Button>
+
+        <ListBox ItemsSource ="{Binding StudentCollection}" SelectedItem="{Binding SelectedStudent}" DisplayMemberPath="FullName" Grid.Column = "0" Grid.ColumnSpan="3" Grid.Row="0"></ListBox>
+        
+        <ListBox ItemsSource ="{Binding ClassCollection}" SelectedValue="{Binding SelectedClass}" DisplayMemberPath="Name" Grid.Column = "4" Grid.ColumnSpan="3" Grid.Row="0"></ListBox>
+    </Grid>
+</Window>
