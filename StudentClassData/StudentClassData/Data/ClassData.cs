@@ -12,7 +12,12 @@ namespace StudentClassData
 
         public ClassData()
         {
+               
+        }
 
+        public ClassData(string className)
+        {
+            Name = className;
         }
 
         public ClassData(int classID, bool isHonors, string name, int roomNumber)

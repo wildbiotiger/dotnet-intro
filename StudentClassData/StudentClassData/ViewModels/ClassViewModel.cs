@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace StudentClassData
 {
-    class ClassViewModel : INotifyPropertyChanged
+    public class ClassViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<StudentData> studentCollection;
 
@@ -28,6 +28,21 @@ namespace StudentClassData
             StudentCollection = new ObservableCollection<StudentData>(classData.StudentList);
         }
 
+        public ClassViewModel(int ClassID, bool IsHonors, string Name, int RoomNumber)
+        {
+            this.ClassID = ClassID;
+            this.IsHonors = IsHonors;
+            this.Name = Name;
+            this.RoomNumber = RoomNumber;
+            
+        }
+
+
+        public ClassViewModel(string name)
+        {
+            Name = name;
+        }
+
         public ClassViewModel(ClassData classData)
         {
             ClassID = classData.ClassID;
@@ -38,7 +53,10 @@ namespace StudentClassData
 
         }
 
-        
+        public ClassViewModel Clone()
+        {
+            return (ClassViewModel)this.MemberwiseClone();
+        }
 
         private int classID;
         public int ClassID
@@ -89,6 +107,14 @@ namespace StudentClassData
             var handler = PropertyChanged;
             if (handler != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal void CopyTo(ClassViewModel dest)
+        {
+            dest.ClassID = ClassID;
+            dest.IsHonors = IsHonors;
+            dest.Name = Name;
+            dest.RoomNumber = RoomNumber;
         }
     }
 }

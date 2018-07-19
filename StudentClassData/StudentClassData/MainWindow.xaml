@@ -43,16 +43,16 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Grid.Row="0"> Student ID</Label>
-            <TextBox Name="StudentID" Text ="{Binding SelectedStudent.StudentID}" Grid.Column="0" Grid.Row="1"> </TextBox>
+            <TextBox Text ="{Binding EditableStudent.StudentID}" Grid.Column="0" Grid.Row="1"> </TextBox>
             
             <Label Grid.Column="0" Grid.Row="2">Full Name</Label>
-            <TextBox Name="FullName" Text ="{Binding SelectedStudent.FullName}" Grid.Column="0" Grid.Row="3"></TextBox>
+            <TextBox Text ="{Binding EditableStudent.FullName}" Grid.Column="0" Grid.Row="3"></TextBox>
             
             <Label Grid.Column="0" Grid.Row="4">Gender</Label>
-            <TextBox Name="Gender" Text ="{Binding SelectedStudent.Gender}" Grid.Column="0" Grid.Row="5"></TextBox>
+            <TextBox Text ="{Binding EditableStudent.Gender}" Grid.Column="0" Grid.Row="5"></TextBox>
             
             <Label Grid.Column="0" Grid.Row="6">Age</Label>
-            <TextBox Name="Age" Text ="{Binding SelectedStudent.Age}" Grid.Column="0" Grid.Row="8"></TextBox>
+            <TextBox Text ="{Binding EditableStudent.Age}" Grid.Column="0" Grid.Row="8"></TextBox>
             
         </Grid>
         <Grid Grid.Column="7">
@@ -70,16 +70,16 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label  Grid.Column="1" Grid.Row="0">Class ID</Label>
-            <TextBox Name="ClassID" Text="{Binding SelectedClass.ClassID}" Grid.Column="0" Grid.Row="1"></TextBox>
+            <TextBox Text="{Binding EditableClass.ClassID}" Grid.Column="0" Grid.Row="1"></TextBox>
 
             <Label  Grid.Column="1" Grid.Row="2">Name</Label>
-            <TextBox Name="Name" Text="{Binding SelectedClass.Name}" Grid.Column="0" Grid.Row="3"></TextBox>
+            <TextBox Text="{Binding EditableClass.Name}" Grid.Column="0" Grid.Row="3"></TextBox>
 
             <Label  Grid.Column="1" Grid.Row="4">IsHonors</Label>
-            <TextBox Name="IsHonors" Text="{Binding SelectedClass.IsHonors}" Grid.Column="0" Grid.Row="5"></TextBox>
+            <TextBox Text="{Binding EditableClass.IsHonors}" Grid.Column="0" Grid.Row="5"></TextBox>
 
             <Label  Grid.Column="1" Grid.Row="6">Room #</Label>
-            <TextBox Name="RoomNumber" Text="{Binding SelectedClass.RoomNumber}" Grid.Column="0" Grid.Row="8"></TextBox>
+            <TextBox Text="{Binding EditableClass.RoomNumber}" Grid.Column="0" Grid.Row="8"></TextBox>
 
         </Grid>
 
@@ -90,7 +90,7 @@
         <Button Grid.Column = "5" Grid.Row = "1" Command="{Binding RemoveClassCommand}">Remove</Button>
         <Button Grid.Column = "6" Grid.Row = "1" Command="{Binding CommitClassCommand}">Commit</Button>
 
-        <ListBox ItemsSource ="{Binding StudentCollection}" SelectedItem="{Binding SelectedStudent}" DisplayMemberPath="FullName" Grid.Column = "0" Grid.ColumnSpan="3" Grid.Row="0"></ListBox>
+        <ListBox ItemsSource ="{Binding StudentCollection}" SelectedItem="{Binding SelectedStudent}"  DisplayMemberPath="FullName" Grid.Column = "0" Grid.ColumnSpan="3" Grid.Row="0"></ListBox>
         
         <ListBox ItemsSource ="{Binding ClassCollection}" SelectedValue="{Binding SelectedClass}" DisplayMemberPath="Name" Grid.Column = "4" Grid.ColumnSpan="3" Grid.Row="0"></ListBox>
     </Grid>

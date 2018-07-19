@@ -11,6 +11,8 @@ namespace StudentClassData
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+
+
         #region Properties
         private RelayCommand addStudentCommand;
 
@@ -60,67 +62,120 @@ namespace StudentClassData
             set { commitClassCommand = value; }
         }
 
-        private StudentData selectedStudent;
+        private StudentViewModel selectedStudent;
 
-        public StudentData SelectedStudent
+        public StudentViewModel SelectedStudent
         {
             get { return selectedStudent; }
             set
             {
                 selectedStudent = value;
+                EditableStudent = SelectedStudent.Clone();
                 OnPropertyChanged("SelectedStudent");
             }
         }
+        private StudentViewModel editableStudent;
 
-        private ClassData selectedClass;
+        public StudentViewModel EditableStudent
+        {
+            get { return editableStudent; }
+            set
+            {
+                editableStudent = value;
+                OnPropertyChanged("EditableStudent");
+            }
+        }
 
-        public ClassData SelectedClass
+
+        private ClassViewModel selectedClass;
+
+        public ClassViewModel SelectedClass
         {
             get { return selectedClass; }
             set
             {
                 selectedClass = value;
+                EditableClass = SelectedClass.Clone();
                 OnPropertyChanged("SelectedClass");
+            }
+        }
+
+        private ClassViewModel editableClass;
+
+        public ClassViewModel EditableClass
+        {
+            get { return editableClass; }
+            set
+            {
+                editableClass = value;
+                OnPropertyChanged("EditableClass");
+            }
+        }
+
+        private StudentViewModel newStudent;
+
+        public StudentViewModel NewStudent
+        {
+            get { return newStudent; }
+            set
+            {
+                newStudent = value;
+                OnPropertyChanged("NewStudent");
+            }
+        }
+
+        private ClassViewModel newClass;
+
+        public ClassViewModel NewClass
+        {
+            get { return newClass; }
+            set
+            {
+                newClass = value;
+                OnPropertyChanged("NewClass");
             }
         }
 
 
         #endregion
 
+
+
         public MainViewModel()
         {
-            AddStudentCommand = new RelayCommand(o => { addStudent(); }, o => { return true; });
-            RemoveStudentCommand = new RelayCommand(o => { removeStudent(); }, o => { return true; });
-            CommitStudentCommand = new RelayCommand(o => { commitStudent(); }, o => { return true; });
+            AddStudentCommand = new RelayCommand(o => { AddStudent(); }, o => { return true; });
+            RemoveStudentCommand = new RelayCommand(o => { RemoveStudent(); }, o => { return true; });
+            CommitStudentCommand = new RelayCommand(o => { CommitStudent(); }, o => { return true; });
 
-            AddClassCommand = new RelayCommand(o => { addClass(); }, o => { return true; });
-            RemoveClassCommand = new RelayCommand(o => { removeClass(); }, o => { return true; });
-            CommitClassCommand = new RelayCommand(o => { commitClass(); }, o => { return true; });
+            AddClassCommand = new RelayCommand(o => { AddClass(); }, o => { return true; });
+            RemoveClassCommand = new RelayCommand(o => { RemoveClass(); }, o => { return true; });
+            CommitClassCommand = new RelayCommand(o => { CommitClass(); }, o => { return true; });
 
-            StudentCollection = new ObservableCollection<StudentData>();
-            ClassCollection = new ObservableCollection<ClassData>();
+            StudentCollection = new ObservableCollection<StudentViewModel>();
+            ClassCollection = new ObservableCollection<ClassViewModel>();
 
-            var thomas = new StudentData(123456, "Thomas Behan", "Male", 18);
-            var sebastian = new StudentData(654321, "Sebastian Sanchez", "Male", 17);
+            var thomas = new StudentViewModel(123456, "Thomas Behan", "Male", 18);
+            var sebastian = new StudentViewModel(654321, "Sebastian Sanchez", "Male", 17);
            
 
-            var calc = new ClassData(101, true, "Calculus BC AP", 231);
-            var gov = new ClassData(321, false, "U.S. Government and Politics", 105);
+            var cal = new ClassViewModel(101, true, "Calculus BC AP", 231);
+            var gov = new ClassViewModel(321, false, "U.S. Government and Politics", 105);
+
 
             StudentCollection.Add(thomas);
             StudentCollection.Add(sebastian);
             
 
-            ClassCollection.Add(calc);
+            ClassCollection.Add(cal);
             ClassCollection.Add(gov);
             
 
         }
 
 
-        private ObservableCollection<StudentData> studentCollection;
+        private ObservableCollection<StudentViewModel> studentCollection;
 
-        public ObservableCollection<StudentData> StudentCollection
+        public ObservableCollection<StudentViewModel> StudentCollection
         {
             get { return studentCollection; }
             set
@@ -130,9 +185,9 @@ namespace StudentClassData
             }
         }
 
-        private ObservableCollection<ClassData> classCollection;
+        private ObservableCollection<ClassViewModel> classCollection;
 
-        public ObservableCollection<ClassData> ClassCollection
+        public ObservableCollection<ClassViewModel> ClassCollection
         {
             get { return classCollection; }
             set
@@ -143,38 +198,43 @@ namespace StudentClassData
         }
 
         #region Add/Remove/Commit
-        public void addStudent()
+        public void AddStudent()
         {
-            var tate = new StudentData(000072, "Tate Bourgeois", "Male", 17);
-            StudentCollection.Add(tate);
+            NewStudent = new StudentViewModel("New Student");
+            StudentCollection.Add(NewStudent);
         }
 
-        public void removeStudent()
+        public void RemoveStudent()
         {
-            StudentCollection.RemoveAt(StudentCollection.Count()-1);
+            StudentCollection.Remove(SelectedStudent);
         }
 
-        public void commitStudent()
+        public void CommitStudent()
         {
+            if(EditableStudent != null)
+                EditableStudent.CopyTo(SelectedStudent);
+        }
+
+        public void AddClass()
+        {
+            var NewClass = new ClassViewModel("New Class");
+            ClassCollection.Add(NewClass);
 
         }
 
-        public void addClass()
+        public void RemoveClass()
         {
-            var chem = new ClassData(421, true, "Chemistry II AP", 141);
-            ClassCollection.Add(chem);
+            ClassCollection.Remove(SelectedClass);
         }
 
-        public void removeClass()
+        public void CommitClass()
         {
-            ClassCollection.RemoveAt(ClassCollection.Count() - 1);
-        }
-
-        public void commitClass()
-        {
-
+            if (EditableClass != null)
+                EditableClass.CopyTo(SelectedClass);
         }
         #endregion
+
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
@@ -183,5 +243,6 @@ namespace StudentClassData
             if (handler != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

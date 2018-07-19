@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace StudentClassData
 {
-    class StudentViewModel : INotifyPropertyChanged
+    public class StudentViewModel : INotifyPropertyChanged
     {
         public StudentViewModel()
         {
@@ -21,6 +21,19 @@ namespace StudentClassData
             FullName = studentData.FullName;
             Gender = studentData.Gender;
             Age = studentData.Age;
+        }
+
+        public StudentViewModel(int StudentID, string FullName, string Gender, int Age)
+        {
+            this.StudentID = StudentID;
+            this.FullName = FullName;
+            this.Gender = Gender;
+            this.Age = Age;
+        }
+
+        public StudentViewModel(string FullName)
+        {
+            this.FullName = FullName;
         }
 
         public StudentData ToModel()
@@ -66,11 +79,17 @@ namespace StudentClassData
         public int Age
         {
             get { return age; }
-            set { age = value; }
+            set
+            {
+                age = value;
+                OnPropertyChanged("Age");
+            }
         }
 
-
-
+        public StudentViewModel Clone()
+        {
+            return (StudentViewModel) this.MemberwiseClone();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -79,6 +98,15 @@ namespace StudentClassData
             var handler = PropertyChanged;
             if (handler != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal void CopyTo(StudentViewModel dest)
+        {
+            dest.StudentID = StudentID;
+            dest.FullName = FullName;
+            dest.Gender = Gender;
+            dest.Age = Age;
+            
         }
     }
 }

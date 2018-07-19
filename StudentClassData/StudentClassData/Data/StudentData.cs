@@ -8,6 +8,10 @@ namespace StudentClassData
 {
     public class StudentData
     {
+        public StudentData(string name)
+        {
+            FullName = name;
+        }
 
         public StudentData(int studentID, string fullName, string gender, int age)
         {
