@@ -86,7 +86,9 @@ namespace StudentClassData
             get { return name; }
             set
             {
-                name = value; }
+                name = value;
+                OnPropertyChanged("Name");
+            }
         }
 
         private int roomNumber;
@@ -109,12 +111,12 @@ namespace StudentClassData
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        internal void CopyTo(ClassViewModel dest)
+        internal void CopyTo(ClassViewModel des)
         {
-            dest.ClassID = ClassID;
-            dest.IsHonors = IsHonors;
-            dest.Name = Name;
-            dest.RoomNumber = RoomNumber;
+            des.ClassID = ClassID;
+            des.IsHonors = IsHonors;
+            des.Name = Name;
+            des.RoomNumber = RoomNumber;
         }
     }
 }
