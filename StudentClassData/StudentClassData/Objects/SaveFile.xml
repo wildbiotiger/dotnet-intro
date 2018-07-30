@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<MainData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <StudentDataList>
+    <StudentData>
+      <StudentID>123456</StudentID>
+      <FullName>Thomas Behan</FullName>
+      <Gender>Male</Gender>
+      <Age>18</Age>
+    </StudentData>
+    <StudentData>
+      <StudentID>654321</StudentID>
+      <FullName>Sebastian Sanchez</FullName>
+      <Gender>Male</Gender>
+      <Age>17</Age>
+    </StudentData>
+    <StudentData>
+      <StudentID>23232</StudentID>
+      <FullName>Tate</FullName>
+      <Age>0</Age>
+    </StudentData>
+  </StudentDataList>
+  <ClassDataList>
+    <ClassData>
+      <ClassID>101</ClassID>
+      <IsHonors>true</IsHonors>
+      <Name>Calculus BC AP</Name>
+      <RoomNumber>231</RoomNumber>
+    </ClassData>
+    <ClassData>
+      <ClassID>321</ClassID>
+      <IsHonors>false</IsHonors>
+      <Name>U.S. Government and Politics</Name>
+      <RoomNumber>105</RoomNumber>
+    </ClassData>
+    <ClassData>
+      <ClassID>232</ClassID>
+      <IsHonors>false</IsHonors>
+      <Name>Econ &lt;test&gt; asdfasdf&lt;/test&gt;</Name>
+      <RoomNumber>190</RoomNumber>
+    </ClassData>
+  </ClassDataList>
+</MainData>

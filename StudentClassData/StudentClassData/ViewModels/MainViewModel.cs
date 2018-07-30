@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml.Serialization;
+using System.IO;
 
 
 namespace StudentClassData
@@ -82,6 +83,7 @@ namespace StudentClassData
             {
                 editableStudent = value;
                 OnPropertyChanged("EditableStudent");
+                
             }
         }
 
@@ -153,22 +155,7 @@ namespace StudentClassData
             StudentCollection = new ObservableCollection<StudentViewModel>();
             ClassCollection = new ObservableCollection<ClassViewModel>();
 
-            var thomas = new StudentViewModel(123456, "Thomas Behan", "Male", 18);
-            var sebastian = new StudentViewModel(654321, "Sebastian Sanchez", "Male", 17);
-           
-
-            var cal = new ClassViewModel(101, true, "Calculus BC AP", 231);
-            var gov = new ClassViewModel(321, false, "U.S. Government and Politics", 105);
-
-            var tester = ToModel();
-            WriteXML(tester);
-
-            StudentCollection.Add(thomas);
-            StudentCollection.Add(sebastian);
-            
-
-            ClassCollection.Add(cal);
-            ClassCollection.Add(gov);
+            FromModel(ReadXML());
         }
 
         public MainViewModel(MainData mainData)
@@ -238,6 +225,7 @@ namespace StudentClassData
         {
             if(EditableStudent != null)
                 EditableStudent.CopyTo(SelectedStudent);
+            WriteXML(ToModel());
         }
 
         public void AddClass()
@@ -256,6 +244,7 @@ namespace StudentClassData
         {
             if (EditableClass != null)
                 EditableClass.CopyTo(SelectedClass);
+            WriteXML(ToModel());
         }
         #endregion
 
@@ -276,17 +265,45 @@ namespace StudentClassData
             return new MainData(StudentList, ClassList);
         }
 
+        public void FromModel(MainData mainData)
+        {
+            var studentList = mainData.StudentDataList;
+            var classList = mainData.ClassDataList;
+            List<StudentViewModel> StudentVMList = new List<StudentViewModel>();
+            foreach(var item in studentList)
+            {
+                StudentVMList.Add(new StudentViewModel(item));
+            }
+            StudentCollection = new ObservableCollection<StudentViewModel>(StudentVMList);
+
+            List<ClassViewModel> ClassVMList = new List<ClassViewModel>(classList.Capacity);
+            foreach(var item in classList)
+            {
+                ClassVMList.Add(new ClassViewModel(item));
+            }
+            ClassCollection = new ObservableCollection<ClassViewModel>(ClassVMList);
+        }
 
         public void WriteXML(MainData mainData)
         {
             XmlSerializer writer = new XmlSerializer(typeof(MainData));
 
-            var path = @"C:\Users\tateb\OneDrive\Documents\GitHub\dotnet-intro\StudentClassData\StudentClassData\Objects\SaveFile";
-            System.IO.FileStream file = System.IO.File.Create(path);
+            var path = Directory.GetCurrentDirectory();
+            FileStream file = File.Create(Path.Combine(path, @"Objects\SaveFile.xml"));
 
             writer.Serialize(file, mainData);
             file.Close();
             SaveFileDialog dlg = new SaveFileDialog();
+        }
+
+        public MainData ReadXML()
+        {
+            XmlSerializer reader = new XmlSerializer(typeof(MainData));
+            var path = Directory.GetCurrentDirectory();
+            StreamReader file = new StreamReader(Path.Combine(path, @"Objects\SaveFile.xml"));
+            MainData data = (MainData)reader.Deserialize(file);
+            file.Close();
+            return data;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
