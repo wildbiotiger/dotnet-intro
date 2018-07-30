@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace StudentClassData
 {
+    [Serializable]
     public class ClassData
     {
-        public List<StudentData> StudentList = new List<StudentData>();
+        private List<StudentData> studentDataList;
+
+        public List<StudentData> StudentDataList
+        {
+            get { return studentDataList; }
+            set { studentDataList = value; }
+        }
+
 
         public ClassData()
         {

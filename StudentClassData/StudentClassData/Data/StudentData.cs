@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace StudentClassData
 {
+    [Serializable]
     public class StudentData
     {
         public StudentData(string name)
@@ -20,6 +21,12 @@ namespace StudentClassData
             Gender = gender;
             Age = age;
         }
+
+        public StudentData()
+        {
+
+        }
+
 
         public int StudentID { get; set; }
         public string FullName { get; set; }

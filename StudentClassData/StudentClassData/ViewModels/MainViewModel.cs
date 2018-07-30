@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
+using System.Xml.Serialization;
+
 
 namespace StudentClassData
 {
@@ -161,6 +160,8 @@ namespace StudentClassData
             var cal = new ClassViewModel(101, true, "Calculus BC AP", 231);
             var gov = new ClassViewModel(321, false, "U.S. Government and Politics", 105);
 
+            var tester = ToModel();
+            WriteXML(tester);
 
             StudentCollection.Add(thomas);
             StudentCollection.Add(sebastian);
@@ -168,10 +169,34 @@ namespace StudentClassData
 
             ClassCollection.Add(cal);
             ClassCollection.Add(gov);
-            
-
         }
 
+        public MainViewModel(MainData mainData)
+        {
+            var studentList = mainData.StudentDataList;
+            var classList = mainData.ClassDataList;
+            AddStudentCommand = new RelayCommand(o => { AddStudent(); }, o => { return true; });
+            RemoveStudentCommand = new RelayCommand(o => { RemoveStudent(); }, o => { return true; });
+            CommitStudentCommand = new RelayCommand(o => { CommitStudent(); }, o => { return true; });
+
+            AddClassCommand = new RelayCommand(o => { AddClass(); }, o => { return true; });
+            RemoveClassCommand = new RelayCommand(o => { RemoveClass(); }, o => { return true; });
+            CommitClassCommand = new RelayCommand(o => { CommitClass(); }, o => { return true; });
+
+            List<StudentViewModel> StudentVMList = new List<StudentViewModel>(studentList.Capacity);
+            for(int i = 0; i < studentList.Capacity;i++)
+            {
+                StudentVMList[i] = new StudentViewModel(studentList[i]);
+            }
+            StudentCollection = new ObservableCollection<StudentViewModel>(StudentVMList);
+
+            List<ClassViewModel> ClassVMList = new List<ClassViewModel>(classList.Capacity);
+            for (int i = 0; i < studentList.Capacity; i++)
+            {
+                ClassVMList[i] = new ClassViewModel(classList[i]);
+            }
+            ClassCollection = new ObservableCollection<ClassViewModel>(ClassVMList);
+        }
 
         private ObservableCollection<StudentViewModel> studentCollection;
 
@@ -234,7 +259,35 @@ namespace StudentClassData
         }
         #endregion
 
-        
+        public MainData ToModel()
+        {
+            var StudentVMList = new ObservableCollection<StudentViewModel>(StudentCollection);
+            var StudentList = new List<StudentData>();
+            foreach(var item in StudentVMList)
+            {
+                StudentList.Add(item.ToModel());
+            }
+            var ClassVMList = new ObservableCollection<ClassViewModel>(ClassCollection);
+            var ClassList = new List<ClassData>();
+            foreach (var item in ClassVMList)
+            {
+                ClassList.Add(item.ToModel());
+            }
+            return new MainData(StudentList, ClassList);
+        }
+
+
+        public void WriteXML(MainData mainData)
+        {
+            XmlSerializer writer = new XmlSerializer(typeof(MainData));
+
+            var path = @"C:\Users\tateb\OneDrive\Documents\GitHub\dotnet-intro\StudentClassData\StudentClassData\Objects\SaveFile";
+            System.IO.FileStream file = System.IO.File.Create(path);
+
+            writer.Serialize(file, mainData);
+            file.Close();
+            SaveFileDialog dlg = new SaveFileDialog();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

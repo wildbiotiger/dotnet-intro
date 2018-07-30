@@ -10,14 +10,24 @@ namespace StudentClassData
 {
     public class ClassViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<StudentData> studentCollection;
+        private List<StudentData> studentList;
 
-        public ObservableCollection<StudentData> StudentCollection
+        public List<StudentData> StudentList
         {
-            get { return studentCollection; }
+            get { return studentList; }
+            set { studentList = value; }
+        }
+
+
+
+        private ObservableCollection<StudentData> studentDataCollection;
+
+        public ObservableCollection<StudentData> StudentDataCollection
+        {
+            get { return studentDataCollection; }
             set
             {
-                studentCollection = value;
+                studentDataCollection = value;
                 OnPropertyChanged("StudentCollection");
             }
         }
@@ -25,7 +35,7 @@ namespace StudentClassData
         public ClassViewModel()
         {
             ClassData classData = new ClassData();
-            StudentCollection = new ObservableCollection<StudentData>(classData.StudentList);
+            StudentDataCollection = new ObservableCollection<StudentData>(classData.StudentDataList);
         }
 
         public ClassViewModel(int ClassID, bool IsHonors, string Name, int RoomNumber)
@@ -36,7 +46,6 @@ namespace StudentClassData
             this.RoomNumber = RoomNumber;
             
         }
-
 
         public ClassViewModel(string name)
         {
@@ -49,8 +58,13 @@ namespace StudentClassData
             IsHonors = classData.IsHonors;
             Name = classData.Name;
             RoomNumber = classData.RoomNumber;
-            StudentCollection = new ObservableCollection<StudentData>(classData.StudentList);
+            StudentDataCollection = new ObservableCollection<StudentData>(classData.StudentDataList);
 
+        }
+
+        public ClassData ToModel()
+        {
+            return new ClassData(ClassID, IsHonors, Name, RoomNumber);
         }
 
         public ClassViewModel Clone()
