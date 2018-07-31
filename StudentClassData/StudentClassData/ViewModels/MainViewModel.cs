@@ -62,6 +62,23 @@ namespace StudentClassData
             set { commitClassCommand = value; }
         }
 
+        private RelayCommand openFileCommand;
+
+        public RelayCommand OpenFileCommand
+        {
+            get { return openFileCommand; }
+            set { openFileCommand = value; }
+        }
+
+        private RelayCommand saveFileCommand;
+
+        public RelayCommand SaveFileCommand
+        {
+            get { return saveFileCommand; }
+            set { saveFileCommand = value; }
+        }
+
+
         private StudentViewModel selectedStudent;
 
         public StudentViewModel SelectedStudent
@@ -70,7 +87,11 @@ namespace StudentClassData
             set
             {
                 selectedStudent = value;
-                EditableStudent = SelectedStudent.Clone();
+                try
+                {
+                    EditableStudent = SelectedStudent.Clone();
+                }
+                catch { }
                 OnPropertyChanged("SelectedStudent");
             }
         }
@@ -96,7 +117,11 @@ namespace StudentClassData
             set
             {
                 selectedClass = value;
-                EditableClass = SelectedClass.Clone();
+                try
+                {
+                    EditableClass = SelectedClass.Clone();
+                }
+                catch { }
                 OnPropertyChanged("SelectedClass");
             }
         }
@@ -137,6 +162,7 @@ namespace StudentClassData
             }
         }
 
+   
 
         #endregion
 
@@ -152,10 +178,13 @@ namespace StudentClassData
             RemoveClassCommand = new RelayCommand(o => { RemoveClass(); }, o => { return true; });
             CommitClassCommand = new RelayCommand(o => { CommitClass(); }, o => { return true; });
 
+            OpenFileCommand = new RelayCommand(o => { OpenFile(); }, o => { return true; });
+            SaveFileCommand = new RelayCommand(o => { SaveFile(); }, o => { return true; });
+
             StudentCollection = new ObservableCollection<StudentViewModel>();
             ClassCollection = new ObservableCollection<ClassViewModel>();
 
-            FromModel(ReadXML());
+            //FromModel(ReadXML());
         }
 
         public MainViewModel(MainData mainData)
@@ -218,6 +247,7 @@ namespace StudentClassData
 
         public void RemoveStudent()
         {
+            //fix this
             StudentCollection.Remove(SelectedStudent);
         }
 
@@ -225,7 +255,7 @@ namespace StudentClassData
         {
             if(EditableStudent != null)
                 EditableStudent.CopyTo(SelectedStudent);
-            WriteXML(ToModel());
+            //WriteXML(ToModel());
         }
 
         public void AddClass()
@@ -245,6 +275,25 @@ namespace StudentClassData
             if (EditableClass != null)
                 EditableClass.CopyTo(SelectedClass);
             WriteXML(ToModel());
+        }
+
+        public void SaveFile()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "unnamed.xml";
+            dlg.ShowDialog();
+            var path = dlg.FileName;
+            WriteXML(ToModel(),path);
+
+        }
+
+        public void OpenFile()
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.ShowDialog();
+            var path = dlg.FileName;
+            if (!path.Equals(""))
+                FromModel(ReadXML(path));
         }
         #endregion
 
@@ -293,7 +342,17 @@ namespace StudentClassData
 
             writer.Serialize(file, mainData);
             file.Close();
-            SaveFileDialog dlg = new SaveFileDialog();
+
+        }
+
+        public void WriteXML(MainData mainData, string path)
+        {
+            XmlSerializer writer = new XmlSerializer(typeof(MainData));
+            FileStream file = File.Create(path);
+
+            writer.Serialize(file, mainData);
+            file.Close();
+
         }
 
         public MainData ReadXML()
@@ -305,7 +364,14 @@ namespace StudentClassData
             file.Close();
             return data;
         }
-
+        public MainData ReadXML(string path)
+        {
+            XmlSerializer reader = new XmlSerializer(typeof(MainData));
+            StreamReader file = new StreamReader(path);
+            MainData data = (MainData)reader.Deserialize(file);
+            file.Close();
+            return data;
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
