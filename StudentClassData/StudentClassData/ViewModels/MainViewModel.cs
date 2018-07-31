@@ -78,6 +78,8 @@ namespace StudentClassData
             set { saveFileCommand = value; }
         }
 
+        public RelayCommand AddToClassCommand { get; set; }
+        public RelayCommand RemoveFromClassCommand { get; set; }
 
         private StudentViewModel selectedStudent;
 
@@ -180,6 +182,10 @@ namespace StudentClassData
 
             OpenFileCommand = new RelayCommand(o => { OpenFile(); }, o => { return true; });
             SaveFileCommand = new RelayCommand(o => { SaveFile(); }, o => { return true; });
+
+            AddToClassCommand = new RelayCommand(o => { AddToClass(); }, o => { return true; });
+            RemoveFromClassCommand = new RelayCommand(o => { RemoveFromClass(); }, o => { return true; });
+
 
             StudentCollection = new ObservableCollection<StudentViewModel>();
             ClassCollection = new ObservableCollection<ClassViewModel>();
@@ -294,6 +300,16 @@ namespace StudentClassData
             var path = dlg.FileName;
             if (!path.Equals(""))
                 FromModel(ReadXML(path));
+        }
+
+        public void AddToClass()
+        {
+            SelectedClass.StudentVMCollection.Add(SelectedStudent);
+        }
+
+        public void RemoveFromClass()
+        {
+            SelectedClass.StudentVMCollection.Remove(SelectedStudent);
         }
         #endregion
 

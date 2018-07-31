@@ -18,8 +18,6 @@ namespace StudentClassData
             set { studentList = value; }
         }
 
-
-
         private ObservableCollection<StudentData> studentDataCollection;
 
         public ObservableCollection<StudentData> StudentDataCollection
@@ -32,10 +30,23 @@ namespace StudentClassData
             }
         }
 
+        private ObservableCollection<StudentViewModel> studentVMCollection;
+
+        public ObservableCollection<StudentViewModel> StudentVMCollection
+        {
+            get { return studentVMCollection; }
+            set
+            {
+                studentVMCollection = value;
+                OnPropertyChanged("StudentVMCollection");
+            }
+        }
+
+
         public ClassViewModel()
         {
             ClassData classData = new ClassData();
-            StudentDataCollection = new ObservableCollection<StudentData>(classData.StudentDataList);
+            StudentVMCollection = new ObservableCollection<StudentViewModel>();
         }
 
         public ClassViewModel(int ClassID, bool IsHonors, string Name, int RoomNumber)
@@ -44,12 +55,13 @@ namespace StudentClassData
             this.IsHonors = IsHonors;
             this.Name = Name;
             this.RoomNumber = RoomNumber;
-            
+            StudentVMCollection = new ObservableCollection<StudentViewModel>();
         }
 
         public ClassViewModel(string name)
         {
             Name = name;
+            StudentVMCollection = new ObservableCollection<StudentViewModel>();
         }
 
         public ClassViewModel(ClassData classData)
@@ -58,7 +70,7 @@ namespace StudentClassData
             IsHonors = classData.IsHonors;
             Name = classData.Name;
             RoomNumber = classData.RoomNumber;
-            StudentDataCollection = new ObservableCollection<StudentData>(classData.StudentDataList);
+            StudentVMCollection = new ObservableCollection<StudentViewModel>();
 
         }
 
