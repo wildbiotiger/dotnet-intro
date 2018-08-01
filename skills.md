@@ -1,25 +1,25 @@
 Core Skills
 
 - XAML syntax
- - Styles
- - StaticResource and ResourceDictionary
- - DataContext
+  - Styles
+  - StaticResource and ResourceDictionary
+  - DataContext
 - Binding syntax
- - Templated binding (ItemSource, Lists)
- - RelativeSource binding 
- - ListBox SelectedItem, SelectedValue, and SelectedIndex Binding differences
+  - Templated binding (ItemSource, Lists)
+  - RelativeSource binding 
+  - ListBox SelectedItem, SelectedValue, and SelectedIndex Binding differences
 - INotifyPropertyChanged
 - ObservableCollection
 - IValueConverter
- - BooleanToVisibilityConverter
+  - BooleanToVisibilityConverter
 - ICommand and RelayCommand
 - Serializable attribute
 - XmlSerializer
 - MVVM architecture
 - Properties
- - simple
- - full
- - custom get and set
+  - simple
+  - full
+  - custom get and set
 - IDisposable
 - using blocks
 - try catch finally blocks
@@ -27,13 +27,13 @@ Core Skills
 - Fody.PropertyChanged
 - override ToString and Equals
 - reference vs value - basic and complex types
- - assignment
- - methods
- - Deep-copy vs Shallow-copy
+  - assignment
+  - methods
+  - Deep-copy vs Shallow-copy
 - string format shorthand ($”{var:X}”)
 - MaterialDesignInXaml
- - Modal Dialogs
- - Default Style overrides
+  - Modal Dialogs
+  - Default Style overrides
 - SaveFileDialog and OpenFileDialog
 - inline List initialization
 
