@@ -1,0 +1,54 @@
+Core Skills
+
+- XAML syntax
+ - Styles
+ - StaticResource and ResourceDictionary
+ - DataContext
+- Binding syntax
+ - Templated binding (ItemSource, Lists)
+ - RelativeSource binding 
+ - ListBox SelectedItem, SelectedValue, and SelectedIndex Binding differences
+- INotifyPropertyChanged
+- ObservableCollection
+- IValueConverter
+ - BooleanToVisibilityConverter
+- ICommand and RelayCommand
+- Serializable attribute
+- XmlSerializer
+- MVVM architecture
+- Properties
+ - simple
+ - full
+ - custom get and set
+- IDisposable
+- using blocks
+- try catch finally blocks
+- Task.Run blocks and lambda functions
+- Fody.PropertyChanged
+- override ToString and Equals
+- reference vs value - basic and complex types
+ - assignment
+ - methods
+ - Deep-copy vs Shallow-copy
+- string format shorthand ($”{var:X}”)
+- MaterialDesignInXaml
+ - Modal Dialogs
+ - Default Style overrides
+- SaveFileDialog and OpenFileDialog
+- inline List initialization
+
+Advanced Topics
+
+- Drag-drop operations
+- Drag delta operations
+- Database ORM - Entity Framework
+- Attached Properties
+- DependencyProperty
+- operator overloading
+- virtual and abstract classes and methods
+- async and await keywords
+- events and delegates
+- enum Binding
+- DataTemplateSelector
+- COM Object Interaction
+- LINQ queries
